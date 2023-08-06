@@ -6,19 +6,15 @@ sudo dscl . -create /Users/Username
 
 # Add the display name of the User as John Doe   
 
-sudo dscl . -create /Users/Username RealName "John Doe"  
+sudo dscl . -create /Users/Username RealName "Temp User"  
 
 # Replace password_here with your desired password to set the password for this user
 
-sudo dscl . -passwd /Users/Username password_here  
+sudo dscl . -passwd /Users/Username TempPassword
 
 # (Optional)Add a password hint   
 
 sudo dscl . -create /Users/Username hint “Password Hint”  
-
-# (Optional)Add a profile picture   
-
-sudo dscl . -create /Users/Username picture “/path to picture.png”  
 
 # Set the Unique ID for the New user. Replace with a number that is not already taken.   
 
