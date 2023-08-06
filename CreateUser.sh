@@ -1,30 +1,22 @@
-#!/bin/sh   
+#!/bin/bash
 
-# Create a new user with the username New user   
+# Check if the script is run as root
+if [ "$(id -u)" != "0" ]; then
+  echo "This script must be run as root."
+  exit 1
+fi
 
-sudo dscl . -create /Users/Username
+# Variables
+USERNAME="Temp User"
+USERID="501"
+PASSWORD="tempPassword"
 
-# Add the display name of the User as John Doe   
+# Create the user
+sysadminctl -addUser "$USERNAME" -password "$PASSWORD" -UID "$USERID" -fullName "$USERNAME" -home "/Users/$USERNAME" -admin
 
-sudo dscl . -create /Users/Username RealName "Temp User"  
-
-# Replace password_here with your desired password to set the password for this user
-
-sudo dscl . -passwd /Users/Username TempPassword 
-
-# Set the Unique ID for the New user. Replace with a number that is not already taken.   
-
-sudo dscl . -create /Users/Username UniqueID 1090  
-
-# Set the group ID for the user  
-
-sudo dscl . -create /Users/Username PrimaryGroupID 20  
-
-# Set the shell interpreter to Bash for New\ user   
-
-sudo dscl . -create /Users/Username UserShell /bin/bash  
-
-# Create a Home folder for the user  
-sudo dscl . -create /Users/Username NFSHomeDirectory /Local/Users/Username  
-# Append the User with admin privilege. If this line is not included the user will be set as standard user. 
-sudo dscl . -append /Groups/admin GroupMembership Username  
+# Check if the user was created successfully
+if [ $? -eq 0 ]; then
+  echo "User '$USERNAME' created successfully."
+else
+  echo "Failed to create user '$USERNAME'."
+fi
