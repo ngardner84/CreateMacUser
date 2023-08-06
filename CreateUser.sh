@@ -10,15 +10,11 @@ sudo dscl . -create /Users/Username RealName "Temp User"
 
 # Replace password_here with your desired password to set the password for this user
 
-sudo dscl . -passwd /Users/Username TempPassword
-
-# (Optional)Add a password hint   
-
-sudo dscl . -create /Users/Username hint “Password Hint”  
+sudo dscl . -passwd /Users/Username TempPassword 
 
 # Set the Unique ID for the New user. Replace with a number that is not already taken.   
 
-sudo dscl . -create /Users/Username UniqueID 1088  
+sudo dscl . -create /Users/Username UniqueID 1090  
 
 # Set the group ID for the user  
 
