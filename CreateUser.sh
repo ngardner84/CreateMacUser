@@ -11,6 +11,15 @@ USERNAME="Temp User"
 USERID="501"
 PASSWORD="tempPassword"
 
+# Function to check if the username exists
+username_exists() {
+  if dscl . -list /Users | grep -q "^$1$"; then
+    return 0
+  else
+    return 1
+  fi
+}
+
 # Function to check if the USERID exists
 user_id_exists() {
   if dscl . -list /Users UniqueID | awk '{print $2}' | grep -q "^$1$"; then
@@ -19,6 +28,12 @@ user_id_exists() {
     return 1
   fi
 }
+
+# Check if the username already exists
+if username_exists "$USERNAME"; then
+  echo "User '$USERNAME' already exists. Operation cancelled."
+  exit 1
+fi
 
 # Increment USERID if it already exists
 while user_id_exists $USERID; do
