@@ -46,6 +46,13 @@ sysadminctl -addUser "$USERNAME" -password "$PASSWORD" -UID "$USERID" -fullName 
 # Check if the user was created successfully
 if [ $? -eq 0 ]; then
   echo "User '$USERNAME' created successfully with UID $USERID."
+
+  # Set the created user as auto-login
+  defaults write /Library/Preferences/com.apple.loginwindow autoLoginUser "$USERNAME"
+  defaults write /Library/Preferences/com.apple.loginwindow autoLoginUserUID "$USERID"
+  defaults write /Library/Preferences/com.apple.loginwindow autoLoginUserPassword "$PASSWORD"
+
+  echo "Auto-login set for user '$USERNAME'."
 else
   echo "Failed to create user '$USERNAME'."
 fi
